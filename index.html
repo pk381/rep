@@ -26,7 +26,7 @@
       <li class="list-group-item">Item 2</li>
       <li class="list-group-item">Item 3</li>
       <li class="list-group-item">Item 4</li>
-      <li>Item 5</li>
+      <!-- <li>Item 5</li> -->
     </ul>
    </div>
   </div>
@@ -47,13 +47,24 @@
     // }
 
 
-    let listByTag = document.getElementsByTagName("li");
+    // let listByTag = document.getElementsByTagName("li");
 
 
 
-    for(let i = 0;i<listByTag.length;i++){
-      listByTag[i].style.fontWeight = "bold";
+    // for(let i = 0;i<listByTag.length;i++){
+    //   listByTag[i].style.fontWeight = "bold";
+    // }
+
+    let listByQu = document.querySelectorAll("li");
+
+      listByQu[1].style.color = "green"
+
+    for(let i = 0;i<listByQu.length;i++){
+
+      if((i+1)%2 == 0)
+        listByQu[i].style.backgroundColor = "green";
     }
+
 
     
 
