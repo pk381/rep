@@ -36,9 +36,15 @@
 
     head.style.borderBottom = "2px solid black";
 
-    let addItem = document.getElementsByClassName("title");
+    let list = document.getElementsByClassName("list-group-item");
 
-    addItem[0].style.color = "green";
+    list[2].style.backgroundColor = "green";
+
+
+    for(let i = 0;i<list.length;i++){
+      list[i].style.fontWeight = "bold";
+    }
+
   </script>
 
 </body>
