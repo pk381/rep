@@ -54,6 +54,8 @@
     </div>
 
     <script>
+
+      let count = 0;
       let form = document.querySelector("form");
 
       let btn = form.lastElementChild;
@@ -65,10 +67,16 @@
       let itemBtn = document.getElementsByClassName("delete");
 
       btn.addEventListener("click", (e) => {
+
         e.preventDefault();
 
         var newItem = form.firstElementChild.value;
 
+        let key = count.toString();
+        console.log(key, newItem);
+        localStorage.setItem(key, newItem);
+
+        count++;
         // Create new li element
         var li = document.createElement("li");
         // Add class
@@ -135,6 +143,8 @@
         }
 
       });
+
+
     </script>
   </body>
 </html>
