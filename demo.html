@@ -7,18 +7,45 @@
 </head>
 <body>
 
+  Name : <input type="text" id="name">
+  Email : <input type="email" id="email">
+  Phone : <input type="text" name="" id="phone">
+
+
+  <button id="submit">Submit</button>
+
+
+  <div id="show">
+
+  </div>
+
 
 
   <script>
 
-    let obj = {
-      name: "prabhat",
-      age: 23
-    };
+    let btn = document.getElementById('submit');
 
-    obj = JSON.stringify(obj);
+    let name = document.getElementById('name');
+    let email = document.getElementById('email');
+    let phone = document.getElementById('phone');
 
-    localStorage.setItem("myobj", obj);
+    let show = document.getElementById('show');
+
+    btn.addEventListener("click", ()=>{
+
+      let newUser = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value
+      }
+
+      localStorage.setItem(email.value, JSON.stringify(newUser));
+
+      show.innerHTML += `<p> name : ${name.value} email: ${email.value} phone: ${phone.value}</p>`;
+
+    })
+
+    
   </script>
   
 </body>
