@@ -1,62 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>local storage</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>local storage</title>
+  </head>
+  <body>
+    Name : <input type="text" id="name" /> Email :
+    <input type="email" id="email" /> Phone :
+    <input type="text" name="" id="phone" />
 
-  Name : <input type="text" id="name">
-  Email : <input type="email" id="email">
-  Phone : <input type="text" name="" id="phone">
+    <button id="submit">Submit</button>
 
+    <div id="show">
+      <p>hhjjasdjhdjsdsaj <button onclick="deleteItem(this)">delete</button></p>
+    </div>
 
-  <button id="submit">Submit</button>
+    <script>
+      let btn = document.getElementById("submit");
 
+      let name = document.getElementById("name");
+      let email = document.getElementById("email");
+      let phone = document.getElementById("phone");
 
-  <div id="show">
+      let show = document.getElementById("show");
 
-    <p> hhjjasdjhdjsdsaj <button onclick="deleteItem(this)">delete</button></p>
+      btn.addEventListener("click", () => {
+        let newUser = {
+          name: name.value,
+          email: email.value,
+          phone: phone.value,
+        };
 
-  </div>
+        localStorage.setItem(email.value, JSON.stringify(newUser));
 
+        show.innerHTML += `<p>${name.value} <span>${email.value}</span> ${phone.value} <button onclick="deleteItem(this)">Delete</button><button onclick="editItem(this)">Edit</button></p>`;
+      });
 
+      function deleteItem(e) {
+        localStorage.removeItem(e.parentElement.firstElementChild.innerText);
 
-  <script>
-
-    let btn = document.getElementById('submit');
-
-    let name = document.getElementById('name');
-    let email = document.getElementById('email');
-    let phone = document.getElementById('phone');
-
-    let show = document.getElementById('show');
-
-    btn.addEventListener("click", ()=>{
-
-      let newUser = {
-        name: name.value,
-        email: email.value,
-        phone: phone.value
+        e.parentElement.parentElement.removeChild(e.parentElement);
       }
 
-      localStorage.setItem(email.value, JSON.stringify(newUser));
-
-      show.innerHTML += `<p> name : ${name.value} email: <span>${email.value}</span> phone: ${phone.value} <button onclick="deleteItem(this)">Delete</button></p>`;
-
-    })
+      function editItem(e){
 
 
-    function deleteItem(e){
+        let item = localStorage.getItem(e.parentElement.firstElementChild.innerText);
 
-      localStorage.removeItem(e.parentElement.firstElementChild.innerText)
+        let obj = JSON.parse(item);
 
-      e.parentElement.parentElement.removeChild(e.parentElement);
-    }
+        name.value = obj.name;
+        email.value = obj.email;
+        phone.value = obj.phone;
 
-    
-  </script>
-  
-</body>
+        deleteItem(e);
+      }
+    </script>
+  </body>
 </html>
