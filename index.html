@@ -28,57 +28,80 @@
           <input type="submit" class="btn btn-dark" value="Submit" />
         </form>
         <h2 class="title">Items</h2>
+
         <ul id="items" class="list-group">
-          <li class="list-group-item">Item 1</li>
-          <li class="list-group-item">Item 2</li>
-          <li class="list-group-item">Item 3</li>
-          <li class="list-group-item">Item 4</li>
-          <!-- <li>Item 5</li> -->
+          <li class="list-group-item">
+            Item 1
+            <button class="btn btn-danger btn-sm float-right delete">X</button>
+          </li>
+          <li class="list-group-item">
+            Item 2
+            <button class="btn btn-danger btn-sm float-right delete">X</button>
+          </li>
+          <li class="list-group-item">
+            Item 3
+            <button class="btn btn-danger btn-sm float-right delete">X</button>
+          </li>
+          <li class="list-group-item">
+            Item 4
+            <button class="btn btn-danger btn-sm float-right delete">X</button>
+          </li>
         </ul>
       </div>
     </div>
 
     <script>
+      let form = document.querySelector("form");
 
-      let h = document.querySelector('#main-header');
-      console.log(h);
+      let btn = form.lastElementChild;
 
-      let ele = document.createElement('div');
+      console.log(btn);
 
-      ele.innerHTML = '<h1> hello world</h1>';
+      let items = document.getElementById("items");
 
-      h.firstElementChild.prepend(ele);
+      let itemBtn = document.getElementsByClassName("delete");
 
-      let item = document.querySelector('#items');
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-      item.prepend(ele);
+        var newItem = form.firstElementChild.value;
 
-      // let head = document.getElementById("main-header");
+        // Create new li element
+        var li = document.createElement("li");
+        // Add class
+        li.className = "list-group-item";
+        // Add text node with input value
+        li.appendChild(document.createTextNode(newItem));
 
-      // head.style.borderBottom = "2px solid black";
+        // Create del button element
+        var deleteBtn = document.createElement("button");
 
-      // let list = document.getElementsByClassName("list-group-item");
-      // list[2].style.backgroundColor = "green";
+        // Add classes to del button
+        deleteBtn.className = "btn btn-danger btn-sm float-right delete";
 
-      // for(let i = 0;i<list.length;i++){
-      //   list[i].style.fontWeight = "bold";
-      // }
+        // Append text node
+        deleteBtn.appendChild(document.createTextNode("X"));
 
-      // let listByTag = document.getElementsByTagName("li");
+        // Append button to li
+        li.appendChild(deleteBtn);
 
-      // for(let i = 0;i<listByTag.length;i++){
-      //   listByTag[i].style.fontWeight = "bold";
-      // }
+        // Append li to list
+        items.appendChild(li);
+      });
 
-      // let listByQu = document.querySelectorAll("li");
+      for (let i = 0; i < itemBtn.length; i++) {
 
-      //   listByQu[1].style.color = "green"
+        itemBtn[i].addEventListener("click", (e) => {
 
-      // for(let i = 0;i<listByQu.length;i++){
+          if(e.target.classList.contains('delete')){
 
-      //   if((i+1)%2 == 0)
-      //     listByQu[i].style.backgroundColor = "green";
-      // }
+              if(confirm('Are You Sure?')){
+                var li = e.target.parentElement;
+                items.removeChild(li);
+              }
+          }
+        });
+      }
     </script>
   </body>
 </html>
