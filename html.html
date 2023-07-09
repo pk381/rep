@@ -9,43 +9,54 @@
 
     <script>
 
-    let user = {
-        name: "name",
-        lastTime: new Date()
-    }
+        console.log("Person1 show ticket");
+        console.log("Person2 show ticket");
 
-    const posts = [{title: "title", body: "new post"}]
+        const promiseWifeBringingTicks = new Promise((res, rej)=>{
+
+            setTimeout(()=>{
+                res("ticket");
+            }, 3000);
+        })
 
 
-    console.log(posts, user.lastTime);
+        const getPopcorn = promiseWifeBringingTicks.then((t)=>{
+            console.log("husband: we should go in");
+            console.log("wife: no i am hungry");
 
+            return new Promise((res, rej)=>{
+                res(`${t} popcorn`);
+            })
+        });
+        
+        const getButter = getPopcorn.then((t)=>{
+            console.log("husband: here is your popcorn");
+            console.log("wife: I need butter on my popcorn");
 
-const updateLastUserActivityTime = new Promise((resolve, reject)=>{
+            return new Promise((res, rej)=>{
+                res(`${t} butter`);
+            })
+        })
 
-    setTimeout(()=>{
-        let time = new Date();
-        user.lastTime = time.getTime();
-        resolve();
-    }, 1000)
-});
+        const getColdDrink = getButter.then((t)=>{
+            
+            console.log("husband: butter here");
+            console.log("wife: I need cold drink also");
 
-function createNewPost(post) {
-    return new Promise( (resolve, reject) => {
-        setTimeout( () => {      
-            posts.push(post);
-            resolve();
-        }, 1000)
-    }) 
-}
+            return new Promise((res, rej)=>{
+                res(`${t} cold drink`);
+            })
 
-let post = {
-    title: "new title",
-    body: "new one post"
-}
+        })
 
-Promise.all([updateLastUserActivityTime, createNewPost(post)]).then(()=>{
-    console.log(posts, user.lastTime);
-})
+        getColdDrink.then((t)=>{
+            console.log(t);
+            console.log("Person3 show ticket");
+        })
+
+        console.log("Person4 show ticket");
+        console.log("Person5 show ticket");
+
 
     </script>
     
