@@ -9,54 +9,60 @@
 
     <script>
 
-        console.log("Person1 show ticket");
-        console.log("Person2 show ticket");
+        console.log('person1 shows ticket');
+        console.log('person2 shows ticket');
 
-        const promiseWifeBringingTicks = new Promise((res, rej)=>{
+        const preMovie = async () => {
 
-            setTimeout(()=>{
-                res("ticket");
-            }, 3000);
-        })
+            const person3PromiseToShowTicketWhenWifeArrives = new Promise((resolve, reject) => {
+                setTimeout(() => resolve('ticket'), 3000);
+            });
 
-
-        const getPopcorn = promiseWifeBringingTicks.then((t)=>{
-            console.log("husband: we should go in");
-            console.log("wife: no i am hungry");
-
-            return new Promise((res, rej)=>{
-                res(`${t} popcorn`);
-            })
-        });
-        
-        const getButter = getPopcorn.then((t)=>{
-            console.log("husband: here is your popcorn");
-            console.log("wife: I need butter on my popcorn");
-
-            return new Promise((res, rej)=>{
-                res(`${t} butter`);
-            })
-        })
-
-        const getColdDrink = getButter.then((t)=>{
+            const getPopcorn =  new Promise((resolve, reject) => {
+                    setTimeout(() => resolve('popcorn'), 3000);
+            });
             
-            console.log("husband: butter here");
-            console.log("wife: I need cold drink also");
+            const addButter =  new Promise((resolve, reject) => {
+                    setTimeout(() => resolve('butter'), 3000);
+            });
 
-            return new Promise((res, rej)=>{
-                res(`${t} cold drink`);
+            const getColdDrink = new Promise((res, rej)=>{
+                setTimeout(()=>{
+                    res(`cold drink`);
+                }, 1000);
             })
 
-        })
+            let ticket = await person3PromiseToShowTicketWhenWifeArrives;
 
-        getColdDrink.then((t)=>{
-            console.log(t);
-            console.log("Person3 show ticket");
-        })
+            console.log(`wife: got the ${ticket}`);
+            console.log(`Husband:we should go in now`);
+            console.log(`Wife: "i am hungry"`);
+        
+            let popcorn = await getPopcorn;
+            console.log(`Husband: here is ${popcorn}`);
+            console.log(`Husband:we should go in now`);
+            console.log(`Wife: "I dont like popcorn without butter!"`);
+            
+            let butter = await addButter;
+            console.log(`added ${butter}`);
+            
+            console.log("husband: lets go now");
+            console.log("wife: I need one cold drink also");
 
-        console.log("Person4 show ticket");
-        console.log("Person5 show ticket");
+            let coldDrink = await getColdDrink;
+            console.log("husband: here is cold drink");
+            
+            console.log(`Husband:Anything else darling`);
+            console.log(`Wife: lets go we are going to miss the preivew`);
+            console.log(`Husband: thanks for the reminder *grin*`);
+            
+            return ticket;
+        
+        };
 
+        preMovie().then((t) => console.log(`person3 shows ${t}`));
+
+        console.log('person4 shows ticket');
 
     </script>
     
