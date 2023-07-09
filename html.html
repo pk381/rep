@@ -1,70 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <script>
 
-        console.log('person1 shows ticket');
-        console.log('person2 shows ticket');
+      const blogs = [];
 
-        const preMovie = async () => {
+      const printInOrder = async () => {
 
-            const person3PromiseToShowTicketWhenWifeArrives = new Promise((resolve, reject) => {
-                setTimeout(() => resolve('ticket'), 3000);
-            });
+        const creat1stpost = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            blogs.push({ title: "BLOG1" });
+            resolve("done");
+          }, 3000);
+        });
 
-            const getPopcorn =  new Promise((resolve, reject) => {
-                    setTimeout(() => resolve('popcorn'), 3000);
-            });
-            
-            const addButter =  new Promise((resolve, reject) => {
-                    setTimeout(() => resolve('butter'), 3000);
-            });
+        const create2ndBlog = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            blogs.push({ title: "BLOG2" });
+            resolve("done");
+          }, 2000);
+        });
 
-            const getColdDrink = new Promise((res, rej)=>{
-                setTimeout(()=>{
-                    res(`cold drink`);
-                }, 1000);
-            })
+        const deleteBlog = new Promise((resolve, reject) => {
+          if (blogs.length > 0) {
+            let post = blogs.pop();
 
-            let ticket = await person3PromiseToShowTicketWhenWifeArrives;
+            resolve(post);
+          } else {
+            reject("ERROR");
+          }
+        });
 
-            console.log(`wife: got the ${ticket}`);
-            console.log(`Husband:we should go in now`);
-            console.log(`Wife: "i am hungry"`);
+
+        let post = await creat1stpost;
+        post =  await create2ndBlog;
+
+        post = await deleteBlog;
+        console.log(post);
+
+        post = await deleteBlog;
+        console.log(post);
+
+        return "done";
+
         
-            let popcorn = await getPopcorn;
-            console.log(`Husband: here is ${popcorn}`);
-            console.log(`Husband:we should go in now`);
-            console.log(`Wife: "I dont like popcorn without butter!"`);
-            
-            let butter = await addButter;
-            console.log(`added ${butter}`);
-            
-            console.log("husband: lets go now");
-            console.log("wife: I need one cold drink also");
+      };
 
-            let coldDrink = await getColdDrink;
-            console.log("husband: here is cold drink");
-            
-            console.log(`Husband:Anything else darling`);
-            console.log(`Wife: lets go we are going to miss the preivew`);
-            console.log(`Husband: thanks for the reminder *grin*`);
-            
-            return ticket;
-        
-        };
 
-        preMovie().then((t) => console.log(`person3 shows ${t}`));
-
-        console.log('person4 shows ticket');
-
+      printInOrder().then((val)=>{
+        console.log(val);
+      });
     </script>
-    
-</body>
+  </body>
 </html>
