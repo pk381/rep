@@ -1,101 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-  </head>
-  <body>
-    <div class="container">
-      <form id="form" class="row col-md-6 my-3 mx-auto border bor">
-
-        <div class="row">
-          <h2 class=" d-flex justify-content-center">BOOK A CALL</h2>
-          <p class="d-flex justify-content-center">Book a call and our repersentative will call you within 1hr of selected time.</p>
-        </div>
-
-        <div class="mb-3">
-          <label for="name" class="form-label"
-            >Name:</label
-          >
-          <input
-            type="text"
-            class="form-control log"
-            id="name"
-            value="name"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label"
-            >Email:</label
-          >
-          <input
-            type="email"
-            class="form-control log"
-            placeholder="email@gmail.com"
-            id="email"
-            value="emai@gmail.com"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="phone" class="form-label">Phone:</label>
-          <input
-            type="text"
-            class="form-control log"
-            value="7992882882"
-            id="phone"
-          />
-        </div>
-
-        <div class="mb-3 form-check">
-
-           <label class="form-label">Time for call:</label>
-
-           <div class="d-flex justify-content-around">
-             <input
-             type="date"
-             class="form-control log"
-             id="time"
-             value="2023-01-01"
-             />
-             
-             <select name="time" id="time" class="form-control mx-1 log">
-              <option value="11:00" selected>11:00</option>
-              <option value="12:00">12:00</option>
-              <option value="01:00">01:00</option>
-              <option value="02:00">02:00</option>
-
-             </select>
-            </div>
-        </div>
-        <button type="submit" id="btn" class="btn btn-primary">GET A CALL</button>
-      </form>
-    </div>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
+</head>
+<body>
 
     <script>
 
-      let a = "jkjdas"
+    let user = {
+        name: "name",
+        lastTime: new Date()
+    }
 
-      if(a.indexOf('a')>-1){
-        console.log("hello");
-      }
+    const posts = [{title: "title", body: "new post"}]
 
+
+    console.log(posts, user.lastTime);
+
+
+const updateLastUserActivityTime = new Promise((resolve, reject)=>{
+
+    setTimeout(()=>{
+        let time = new Date();
+        user.lastTime = time.getTime();
+        resolve();
+    }, 1000)
+});
+
+function createNewPost(post) {
+    return new Promise( (resolve, reject) => {
+        setTimeout( () => {      
+            posts.push(post);
+            resolve();
+        }, 1000)
+    }) 
+}
+
+let post = {
+    title: "new title",
+    body: "new one post"
+}
+
+Promise.all([updateLastUserActivityTime, createNewPost(post)]).then(()=>{
+    console.log(posts, user.lastTime);
+})
 
     </script>
-
     
-  </body>
+</body>
 </html>
