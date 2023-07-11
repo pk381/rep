@@ -4,10 +4,32 @@ axios
   .get("https://crudcrud.com/api/1a6fb38b75c84e1d9a5c9269e02428e9/expenseData")
   .then((res) => {
     for (let i = 0; i < res.data.length; i++) {
+      let item = ` ${i+1}.  Expense: ${res.data[i].Expense} Description: ${res.data[i].Description} Category: ${res.data[i].Category}`;
       let items = document.getElementById("items");
-      let li = document.createElement("li");
-      let item = `${res.data[i].Expense} ${res.data[i].Description} ${res.data[i].Description}`;
+      // Create new li element
+      var li = document.createElement("li");
+      // Add class
+      li.className = "list-group-item m-1";
+      // Add text node with input value
       li.appendChild(document.createTextNode(item));
+
+      // Create del buttons element
+      var deleteBtn = document.createElement("button");
+      var editBtn = document.createElement("button");
+
+      // Add classes to button
+      deleteBtn.className = "btn btn-danger btn-sm float-right delete";
+      editBtn.className = "btn btn-dark btn-sm float-right mx-1 edit";
+
+      // Append text node
+      deleteBtn.appendChild(document.createTextNode("Delete"));
+      editBtn.appendChild(document.createTextNode("Edit"));
+
+      // Append button to li
+      li.appendChild(deleteBtn);
+      li.appendChild(editBtn);
+
+      // Append li to list
 
       items.appendChild(li);
     }
@@ -23,18 +45,16 @@ document.getElementById("submit").addEventListener("click", (e) => {
     Category: input[2].value,
   };
 
-  let items = document.getElementById("items");
-  let li = document.createElement("li");
-  let item = `${input[0].value} ${input[1].value} ${input[2].value}`;
-  li.appendChild(document.createTextNode(item));
-  items.appendChild(li);
-
   axios
     .post(
       "https://crudcrud.com/api/1a6fb38b75c84e1d9a5c9269e02428e9/expenseData",
       obj
     )
-    .then((res) => console.log(res))
+    .then((res) => {
+        
+        window.location.reload();
+    }
+    )
     .catch((err) => console.log(err));
 });
 
