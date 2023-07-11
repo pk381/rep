@@ -1,10 +1,15 @@
 let input = document.getElementsByClassName("input");
 
+let data = [];
+
 axios
   .get("https://crudcrud.com/api/1a6fb38b75c84e1d9a5c9269e02428e9/expenseData")
   .then((res) => {
     for (let i = 0; i < res.data.length; i++) {
-      let item = ` ${i+1}.  Expense: ${res.data[i].Expense} Description: ${res.data[i].Description} Category: ${res.data[i].Category}`;
+
+      data[i] = res.data[i];
+
+      let item = `${i+1}.  Expense: ${res.data[i].Expense} Description: ${res.data[i].Description} Category: ${res.data[i].Category}`;
       let items = document.getElementById("items");
       // Create new li element
       var li = document.createElement("li");
@@ -51,7 +56,7 @@ document.getElementById("submit").addEventListener("click", (e) => {
       obj
     )
     .then((res) => {
-        
+
         window.location.reload();
     }
     )
@@ -63,14 +68,25 @@ let itemBtn = document.getElementById("items");
 itemBtn.addEventListener("click", removeEdit);
 
 function removeEdit(e) {
-  let text = e.target.parentElement.innerText.toString();
-  text = text.split(" ");
-  let key = text[0] + text[1] + text[2] + text[3] + text[4];
+  
+    let text = e.target.parentElement.innerText.toString();
+    text = text.split(" ");
+    let key = text[0];
+    key = parseInt(key) - 1;
+    key = data[key]._id;
 
   if (e.target.classList.contains("delete")) {
-    localStorage.removeItem(key);
-    var li = e.target.parentElement;
-    itemBtn.removeChild(li);
+
+    let url = `https://crudcrud.com/api/1a6fb38b75c84e1d9a5c9269e02428e9/expenseData/${key}`;
+
+    axios.delete(url)
+    .then( res =>{
+        console.log(res);
+        window.location.reload();
+    }
+    )
+    .catch( err => console.log(err));
+    
   }
 
   if (e.target.classList.contains("edit")) {
