@@ -2,14 +2,17 @@ let input = document.getElementsByClassName("input");
 
 let data = [];
 
+
+// remaining
+
 axios
-  .get("https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosRemaining")
+  .get("https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosRemaining")
   .then((res) => {
     for (let i = 0; i < res.data.length; i++) {
 
       data[i] = res.data[i];
 
-      let item = `${i+1} .  Name: ${res.data[i].Expense} Description: ${res.data[i].Description}`;
+      let item = `${i+1} .  Name: ${res.data[i].Name} Description: ${res.data[i].Description}`;
       let items = document.getElementById("remaining");
       // Create new li element
       var li = document.createElement("li");
@@ -41,14 +44,16 @@ axios
   })
   .catch((err) => console.log(err));
 
+  // dones
+
   axios
-  .get("https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosDone")
+  .get("https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosDone")
   .then((res) => {
 
     for (let i = 0; i < res.data.length; i++) {
 
-      let item = `${i+1} .  Name: ${res.data[i].Expense} Description: ${res.data[i].Description}`;
-      let items = document.getElementById("done");
+      let item = `${i+1} .  Name: ${res.data[i].Name} Description: ${res.data[i].Description}`;
+      let items = document.getElementById("dones");
       // Create new li element
       let li = document.createElement("li");
       // Add class
@@ -71,12 +76,13 @@ document.getElementById("submit").addEventListener("click", (e) => {
 
   axios
     .post(
-      "https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosRemaining",
+      "https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosRemaining",
       obj
     )
     .then((res) => {
 
         window.location.reload();
+        console.log(res);
     }
     )
     .catch((err) => console.log(err));
@@ -95,9 +101,11 @@ function removeEdit(e) {
     let d = key;
     key = data[key]._id;
 
+    console.log(key);
+
   if (e.target.classList.contains("delete")) {
 
-    let url = `https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosRemaining/${key}`;
+    let url = `https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosRemaining/${key}`;
 
     axios.delete(url)
     .then( res =>{
@@ -111,31 +119,30 @@ function removeEdit(e) {
 
   if (e.target.classList.contains("done")) {
 
+    // console.log("done");
+
     let obj = {
         Name: data[d].Name,
         Description: data[d].Description
     }
 
-    axios.put("https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosDone", obj)
+    axios.post("https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosDone", obj)
     .then( res =>{
 
         console.log(res);
+        let url = `https://crudcrud.com/api/a8c1569d8bd24678acced45216b20d21/toDosRemaining/${key}`;
 
-        axios.delete(`https://crudcrud.com/api/c27e85562a044b2b8571c701ed889dcb/toDosRemaining${key}`)
+        axios.delete(url)
         .then( res =>{
         console.log(res);
         }).catch( err =>{
 
             console.log(err);
         })
-
         window.location.reload();
     }
     )
     .catch( err => console.log(err));
-
-    // var li = e.target.parentElement;
-    // itemBtn.removeChild(li);
   }
 
   
