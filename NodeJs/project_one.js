@@ -1,10 +1,11 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
+const app = express();
 
-const route = require('./routes');
+app.use((req, res, next)=>{
+
+    res.send({one: "one"});
+});
 
 console.log("running");
 
-const server = http.createServer(route);
-
-server.listen(4000);
+app.listen(4000);
