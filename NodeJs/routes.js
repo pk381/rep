@@ -1,48 +1,39 @@
-const fs = require('fs');
+const fs = require("fs");
 
+const requestHandler = (req, res) => {
+  const url = req.url;
+  const method = req.method;
 
-const requestHandler = (req, res)=>{
+  if (url === "/") {
+    fs.readFile("message.txt", "UTF-8", (err, data) => {
+      console.log("data = ", data);
 
-    const url = req.url;
-    const method = req.method;
+      res.write("<html><head><title>Document</title></head>");
+      res.write(
+        `<body><h1>${data}</h1><form action="/message" method="POST"><input type="text" name="message"><button type="submit">send</button></form></body></html>`
+      );
+      return res.end();
+    });
+  }
 
-    if(url === '/'){
+  if (url === "/message" && method === "POST") {
+    console.log("in message");
 
-        fs.readFile('message.txt', 'UTF-8',(err, data)=>{
-            console.log("data = ", data);
+    const body = [];
+    req.on("data", (chunk) => {
+      body.push(chunk);
+    });
 
-            console.log("gi");
+    req.on("end", () => {
+      const messsage = Buffer.concat(body).toString().split("=")[1];
+      // console.log(messsage);
+      fs.writeFileSync("message.txt", messsage);
+    });
 
-            res.write('<html><head><title>Document</title></head>');
-            res.write(`<body><h1>${data}</h1><form action="/message" method="POST"><input type="text" name="message"><button type="submit">send</button></form></body></html>`);
-            return res.end();
-        });
-
-    }
-    
-    if(url === '/message' && method === 'POST'){
-
-        console.log("in message");
-
-        const body = [];
-        req.on('data', (chunk)=>{
-            body.push(chunk);
-        });
-
-        req.on('end', ()=>{
-            const messsage = Buffer.concat(body).toString().split("=")[1];
-            // console.log(messsage);
-            fs.writeFileSync("message.txt", messsage);
-
-        });
-
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
-
-    }
-    
-    
-}
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    return res.end();
+  }
+};
 
 module.exports = requestHandler;

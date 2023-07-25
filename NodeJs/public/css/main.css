@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    background-color: aqua;
+    display: flex;
+    height: 50px;
+    flex-direction: row;
+    align-items: center;
+}
+li, a{
+
+    margin: 1px 5px;
+    text-decoration: none;
+    list-style: none;
+    color: black;
+}
+
+form{
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+    margin: 5px 10px;
+    justify-content: space-around;
+}
+
+input{
+    width: 40%;
+    height: 25px;
+    outline: none;
+}
+button{
+    width: 20%;
+    height: 30px;
+    background-color: greenyellow;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
