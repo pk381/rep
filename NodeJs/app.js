@@ -5,7 +5,9 @@ const path = require('path');
 const adminRouter = require('./routes/add_product')
 const contactRouter = require('./routes/contact')
 
-const shopRouter = require('./routes/shop');
+// 404 page 
+
+const errorPage = require('./controller/404');
 
 const bodyParser = require("body-parser");
 
@@ -19,9 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(adminRouter);
 app.use(contactRouter);
 
-app.use((req, res, next)=>{
-    res.sendFile(path.join(__dirname, './', 'views', '404.html'));
-})
+app.use(errorPage.errorPageFun);
 
 
 app.listen(4000);
