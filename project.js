@@ -1,5 +1,5 @@
 let input = document.getElementsByClassName("input");
-localStorage.clear();
+// localStorage.clear();
 
 document.getElementById("submit").addEventListener("click", (e) => {
   e.preventDefault();

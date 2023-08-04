@@ -3,59 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>local storage</title>
+    <title>Demo</title>
   </head>
   <body>
-    Name : <input type="text" id="name" /> Email :
-    <input type="email" id="email" /> Phone :
-    <input type="text" name="" id="phone" />
 
-    <button id="submit">Submit</button>
 
-    <div id="show">
-      <p>hhjjasdjhdjsdsaj <button onclick="deleteItem(this)">delete</button></p>
-    </div>
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <script>
-      let btn = document.getElementById("submit");
+      
+      function getCheese(callback){
 
-      let name = document.getElementById("name");
-      let email = document.getElementById("email");
-      let phone = document.getElementById("phone");
+        setTimeout(()=>{
 
-      let show = document.getElementById("show");
-
-      btn.addEventListener("click", () => {
-        let newUser = {
-          name: name.value,
-          email: email.value,
-          phone: phone.value,
-        };
-
-        localStorage.setItem(email.value, JSON.stringify(newUser));
-
-        show.innerHTML += `<p>${name.value} <span>${email.value}</span> ${phone.value} <button onclick="deleteItem(this)">Delete</button><button onclick="editItem(this)">Edit</button></p>`;
-      });
-
-      function deleteItem(e) {
-        localStorage.removeItem(e.parentElement.firstElementChild.innerText);
-
-        e.parentElement.parentElement.removeChild(e.parentElement);
+          console.log("here is the cheese");
+          callback("cheese");
+        }, 2000);
       }
 
-      function editItem(e){
 
+      function makeDough(cheese, callback){
 
-        let item = localStorage.getItem(e.parentElement.firstElementChild.innerText);
+        setTimeout(()=>{
 
-        let obj = JSON.parse(item);
-
-        name.value = obj.name;
-        email.value = obj.email;
-        phone.value = obj.phone;
-
-        deleteItem(e);
+          const dough = "dough " + cheese;
+          console.log("here is the " + dough);
+          callback(dough);
+        }, 2000);
       }
+
+
+      function makePizza(dough, callback){
+
+        setTimeout(()=>{
+
+          const pizza = dough + " pizza";
+          console.log("here is ",pizza);
+          callback();
+
+        }, 2000)
+      }
+
+
+      getCheese((cheese)=>{
+
+        makeDough(cheese, (dough)=>{
+           makePizza(dough, ()=>{
+            console.log("got pizza");
+           })
+        })
+      })
+
+
+      
     </script>
   </body>
 </html>
